@@ -1,0 +1,15 @@
+version: "2.4"
+services: 
+    nginx:
+        restart: always
+        image: nginx:latest
+        volumes:
+          - /root/devsecops/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+        ports:
+          - "8080:80"
+        healthcheck:
+          test: ["CMD-SHELL","curl --silent --fail localhost:80 || exit 1" ]
+          interval: 30s
+          timeout: 10s
+          retries: 3
+

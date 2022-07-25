@@ -1,0 +1,21 @@
+version: "2.4"
+services: 
+    jenkins:
+        restart: always
+        image: lostar01/jenkins:latest
+        volumes:
+          - /opt/jenkins:/var/jenkins_home
+          - /usr/bin/docker-current:/usr/bin/docker-current
+          - /usr/bin/docker:/usr/bin/docker
+          - /var/run/docker.sock:/var/run/docker.sock
+          - /etc/sysconfig/docker:/etc/sysconfig/docker
+          - /usr/bin/syft:/usr/bin/syft
+        ports:
+          - "8090:8080"
+          - "50000:50000"
+        healthcheck:
+          test: ["CMD-SHELL","curl --silent --fail localhost:8080/login || exit 1" ]
+          interval: 30s
+          timeout: 10s
+          retries: 3
+
